@@ -2,10 +2,10 @@
 
 <?php
 
-require_once '../modelo/personasM.php';
+require_once '../modelo/empleadosM.php';
 require_once './Mensajes.php';
 
-class PersonasC extends Personas {
+class EmpleadosC extends empleados {
 
     function __construct() {
         switch ($_REQUEST['accion']) {
