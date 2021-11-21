@@ -5,7 +5,7 @@
 require_once '../modelo/preciosM.php';
 require_once './Mensajes.php';
 
-class PersonasC extends Personas {
+class PreciosC extends Precios {
 
     function __construct() {
         switch ($_REQUEST['accion']) {
@@ -51,15 +51,15 @@ class PersonasC extends Personas {
 
     function consultar() {
         if ($this->validarDatos()) {
-            $sql = "SELECT * FROM Personas  WHERE documento='" . $this->getDocumento() . "'";
+            $sql = "SELECT * FROM Precios  WHERE CB='" . $this->getCB() . "'";
             $this->ejecutarSelect($sql);
         }
     }
 
     function eliminar() {
         if ($this->validarDatos()) {
-            $sql = "DELETE FROM Personas  WHERE documento='" . $this->getDocumento() . "'";
-            $this->ejecutarQuery($sql, "La persona se ha eliminado en el base.");
+            $sql = "DELETE FROM Precios  WHERE CB='" . $this->getCB() . "'";
+            $this->ejecutarQuery($sql, "el precio se ha eliminado en el base.");
         } else {
             Mensajes::info("Faltan datos, no se pudo registrar");
         }
@@ -67,7 +67,7 @@ class PersonasC extends Personas {
 
     function resgistrar() {
         if ($this->validarDatos()) {
-            $sql = "INSERT INTO Personas VALUES('" . $this->getDocumento() . "','" . $this->getPnombre() . "','" . $this->getSnombre() . "','" . $this->getPapellido() . "','" . $this->getSapellido() . "','" . $this->getEmail() . "')";
+            $sql = "INSERT INTO Precios VALUES('" . $this->getCB() . "','" . $this->getFechaIni() . "','" . $this->getFechaFin() . "','" . $this->getPrecio() . "')";
             $this->ejecutarQuery($sql, "La persona se ha registrado en el base.");
         } else {
             Mensajes::info("Faltan datos, no se pudo registrar");
@@ -76,8 +76,8 @@ class PersonasC extends Personas {
 
     function actualizar() {
         if ($this->validarDatos()) {
-            $sql = "UPDATE Personas SET  pnombre='" . $this->getPnombre() . "' , snombre='" . $this->getSnombre() . "', papellido='" . $this->getPapellido() . "', sapellido='" . $this->getSapellido() . "', email='" . $this->getEmail() . "' WHERE documento='" . $this->getDocumento() . "'";
-            $this->ejecutarQuery($sql, "La persona se ha actualizado en el base.");
+            $sql = "UPDATE Personas SET  CB='" . $this->getCB() . "' , FechaIni='" . $this->getFechaIni() . "', FechaFin='" . $this->getFechaFin() . "', Precio='" . $this->getPrecio() . "' WHERE CB='" . $this->getCB() . "'";
+            $this->ejecutarQuery($sql, "El precio se ha actualizado en la base.");
         } else {
             Mensajes::info('Los datos no se pueden actualizar.');
         }
@@ -90,7 +90,7 @@ class PersonasC extends Personas {
         if ($result->num_rows > 0) {
             // output data of each row
             while ($row = $result->fetch_assoc()) {
-                $p = array($row['documento'], $row['pnombre'], $row['snombre'], $row['papellido'], $row['sapellido'], $row['email']);
+                $p = array($row['CB'], $row['FechaIni'], $row['FechaFin'], $row['Precio']);
 
                 $myJSON = json_encode($p);
 
@@ -114,15 +114,14 @@ class PersonasC extends Personas {
     }
 
     function validarDatos() {
-        if (isset($_POST['Documento'])) {
+        if (isset($_POST['CB'])) {
 
-            $this->setDocumento($_POST['Documento']);
+            $this->setCB($_POST['CB']);
             if ($_POST['accion'] != "Consultar") {
-                $this->setPnombre($_POST['pnombre']);
-                $this->setPapellido($_POST['papellido']);
-                $this->setSnombre($_POST['snombre']);
-                $this->setSapellido($_POST['sapellido']);
-                $this->setEmail($_POST['email']);
+                $this->setCB($_POST['CB']);
+                $this->setFechaIni($_POST['FechaIni']);
+                $this->setFechaFin($_POST['FechaFin']);
+                $this->setPrecio($_POST['Precio']);
             }
 
             return true;
@@ -133,7 +132,7 @@ class PersonasC extends Personas {
 
 }
 
-new PersonasC();
+new PreciosC();
 ?>
 
 

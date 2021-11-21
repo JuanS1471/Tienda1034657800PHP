@@ -28,7 +28,7 @@
                     }
 
                 }
-                xmlhttp.open("POST", "controlador/personasc.php");
+                xmlhttp.open("POST", "controlador/preciosc.php");
                 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xmlhttp.send("accion=Consultar&Documento=" + d);
 
@@ -38,8 +38,8 @@
 
             function enviarF(accion) {
                 var form = document.enviar;
-                form.action = "controlador/personasc.php?accion=" + accion;
-                var d = document.getElementById("Documento");
+                form.action = "controlador/preciosc.php?accion=" + accion;
+                var d = document.getElementById("CB");
                 var pn = document.getElementById("pnombre");
                 var pa = document.getElementById("papellido");
                 var sub = true;
@@ -96,7 +96,7 @@
             <table id="tabla1" class="table table-hover table-bordered">
                 <tr>
                     <td><label for="CB" class="form-label">Codigo De Barras</label></td>
-                    <td><input type="number" class="form-control" id="CB" name="CB" ></td>
+                    <td><input type="text" class="form-control" id="CB" name="CB" ></td>
                 </tr>
                 <tr>
                     <td><label for="FechaIni" class="form-label">Fecha Inicial</label></td>
@@ -108,7 +108,7 @@
                 </tr>
                 <tr>
                     <td><label for="Precio" class="form-label">Precio</label></td>
-                    <td><input type="text" class="form-control" id="Precio" name="Precio"></td>
+                    <td><input type="number" class="form-control" id="Precio" name="Precio"></td>
                 </tr>
                 <tr>
                     <td><input type="button" value="Guardar" class="btn btn-success"  onclick="enviarF('Guardar')"></td>

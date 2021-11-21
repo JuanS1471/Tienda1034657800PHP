@@ -2,10 +2,10 @@
 
 <?php
 
-require_once '../modelo/personasM.php';
+require_once '../modelo/productosM.php';
 require_once './Mensajes.php';
 
-class PersonasC extends Personas {
+class ProductosC extends Productos {
 
     function __construct() {
         switch ($_REQUEST['accion']) {
@@ -51,15 +51,15 @@ class PersonasC extends Personas {
 
     function consultar() {
         if ($this->validarDatos()) {
-            $sql = "SELECT * FROM Personas  WHERE documento='" . $this->getDocumento() . "'";
+            $sql = "SELECT * FROM Productos  WHERE cb='" . $this->getCb() . "'";
             $this->ejecutarSelect($sql);
         }
     }
 
     function eliminar() {
         if ($this->validarDatos()) {
-            $sql = "DELETE FROM Personas  WHERE documento='" . $this->getDocumento() . "'";
-            $this->ejecutarQuery($sql, "La persona se ha eliminado en el base.");
+            $sql = "DELETE FROM Productos  WHERE cb='" . $this->getCb() . "'";
+            $this->ejecutarQuery($sql, "El producto se ha eliminado en el base.");
         } else {
             Mensajes::info("Faltan datos, no se pudo registrar");
         }
@@ -67,8 +67,8 @@ class PersonasC extends Personas {
 
     function resgistrar() {
         if ($this->validarDatos()) {
-            $sql = "INSERT INTO Personas VALUES('" . $this->getDocumento() . "','" . $this->getPnombre() . "','" . $this->getSnombre() . "','" . $this->getPapellido() . "','" . $this->getSapellido() . "','" . $this->getEmail() . "')";
-            $this->ejecutarQuery($sql, "La persona se ha registrado en el base.");
+            $sql = "INSERT INTO Personas VALUES('" . $this->getCb() . "','" . $this->getNombre() . "','" . $this->getDescripcion() . "')";
+            $this->ejecutarQuery($sql, "El producto se ha registrado en el base.");
         } else {
             Mensajes::info("Faltan datos, no se pudo registrar");
         }
@@ -76,8 +76,8 @@ class PersonasC extends Personas {
 
     function actualizar() {
         if ($this->validarDatos()) {
-            $sql = "UPDATE Personas SET  pnombre='" . $this->getPnombre() . "' , snombre='" . $this->getSnombre() . "', papellido='" . $this->getPapellido() . "', sapellido='" . $this->getSapellido() . "', email='" . $this->getEmail() . "' WHERE documento='" . $this->getDocumento() . "'";
-            $this->ejecutarQuery($sql, "La persona se ha actualizado en el base.");
+            $sql = "UPDATE Personas SET  cb='" . $this->getCb() . "' , nombre='" . $this->getNombre() . "', descripcion='" . $this->getDescripcion() . "' WHERE cb='" . $this->getCb() . "'";
+            $this->ejecutarQuery($sql, "El producto se ha actualizado en el base.");
         } else {
             Mensajes::info('Los datos no se pueden actualizar.');
         }
@@ -90,7 +90,7 @@ class PersonasC extends Personas {
         if ($result->num_rows > 0) {
             // output data of each row
             while ($row = $result->fetch_assoc()) {
-                $p = array($row['documento'], $row['pnombre'], $row['snombre'], $row['papellido'], $row['sapellido'], $row['email']);
+                $p = array($row['cb'], $row['nombre'], $row['descripcion']);
 
                 $myJSON = json_encode($p);
 
@@ -116,13 +116,11 @@ class PersonasC extends Personas {
     function validarDatos() {
         if (isset($_POST['Documento'])) {
 
-            $this->setDocumento($_POST['Documento']);
+            $this->setCb($_POST['cb']);
             if ($_POST['accion'] != "Consultar") {
-                $this->setPnombre($_POST['pnombre']);
-                $this->setPapellido($_POST['papellido']);
-                $this->setSnombre($_POST['snombre']);
-                $this->setSapellido($_POST['sapellido']);
-                $this->setEmail($_POST['email']);
+                $this->setCb($_POST['cb']);
+                $this->setNombre($_POST['nombre']);
+                $this->setDescripcion($_POST['descripcion']);
             }
 
             return true;
@@ -133,7 +131,7 @@ class PersonasC extends Personas {
 
 }
 
-new PersonasC();
+new ProductosC();
 ?>
 
 
