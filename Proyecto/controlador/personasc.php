@@ -117,7 +117,7 @@ class PersonasC extends Personas {
         if (isset($_POST['Documento'])) {
 
             $this->setDocumento($_POST['Documento']);
-            if ($_POST['accion'] != "Consultar") {
+            if ($_POST['accion'] != "consultar") {
                 $this->setPnombre($_POST['pnombre']);
                 $this->setPapellido($_POST['papellido']);
                 $this->setSnombre($_POST['snombre']);
